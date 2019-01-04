@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true" 
+	>
+	
+	<import resource="toshiba_context.xml"/>
+	<import resource="sony_context.xml"/>
+	
+<!--   in tag beans:
+	default-init-method = "initObject"
+	default-destroy-method="destroyObject"
+     default-lazy-init="true" -->
+     
+     <bean id = "actionReplacer" class="com.example.impls.robot.ActionReplacer"></bean>
+
+	<bean id="t1000" class="com.example.impls.robot.ModelT1000"
+	  parent="baseModel" scope="prototype">
+	 
+	 <!-- in tag bean:
+	     init-method="initObject"
+	     destroy-method="destroyObject" -->
+	 
+		<constructor-arg value="silver" index="3" type="String"></constructor-arg> 
+ 		<constructor-arg value="2006" index="4" type="int"></constructor-arg> 
+		<constructor-arg value="true" index="5" type="boolean"></constructor-arg> 
+		
+		<!--  <property name="hand" ref="toshibaHand" />-->
+	    <!--	<property name="head" ref="toshibaHead" />-->
+		<!--<property name="leg" ref="toshibaLeg" />-->
+		
+		      <replaced-method  name="action"  replacer="actionReplacer" />
+	</bean>
+	
+	<bean id="baseModel" >
+	 
+		<constructor-arg ref="sonyHand" index="0"></constructor-arg> 
+ 		<constructor-arg ref="sonyLeg" index="1"></constructor-arg> 
+		<constructor-arg ref="sonyHead" index="2"></constructor-arg> 
+		
+	</bean>
+
+
+	
+	<bean class="com.example.start.HomePostProcessor"></bean>
+	
+	
+	<bean id="t1000Conveyor" class="com.example.impls.robot.T1000Conveyor">
+	<lookup-method name = "createRobot" bean="t1000"/>
+	</bean>
+	
+</beans>
