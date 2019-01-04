@@ -43,6 +43,23 @@
 	</bean>
 
 
+	<bean id="t1000Pool" class="com.example.impls.robot.T1000Pool"	>
+	<constructor-arg name="robotCollection">
+		<map>
+		 <entry key="2005" value-ref="t1000"/>
+		 <entry key="2006" value-ref="t1000"/>
+		 <entry key="2007" >
+		 	<bean class="com.example.impls.robot.ModelT1000"  parent="baseModel" >
+				<constructor-arg value="silver" type="String"></constructor-arg> 
+	 			<constructor-arg value="2007"   type="int"></constructor-arg> 
+				<constructor-arg value="true"   type="boolean"></constructor-arg> 
+			</bean>
+		</entry>
+		</map>
+	</constructor-arg>
+		
+	</bean>
+
 	
 	<bean class="com.example.start.HomePostProcessor"></bean>
 	
